@@ -1,5 +1,5 @@
 // app/api/chatgpt/route.ts
-
+"use server";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
