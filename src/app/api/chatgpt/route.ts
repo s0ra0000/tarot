@@ -1,9 +1,10 @@
 // app/api/chatgpt/route.ts
+
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // Make sure this is correctly set
+  apiKey: process.env.OPENAI_API_KEY, // Ensure this key is correctly set in Vercel
 });
 
 export async function POST(req: Request) {
@@ -19,7 +20,7 @@ export async function POST(req: Request) {
     `;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // Using GPT-4 turbo
+      model: "gpt-3.5-turbo", // or gpt-3.5-turbo depending on your API access
       messages: [
         { role: "system", content: "You are a tarot card reading expert." },
         { role: "user", content: prompt },
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
     const completionText: any = response.choices[0].message.content;
     return NextResponse.json({ response: completionText.trim() });
   } catch (error) {
-    console.error("Error generating ChatGPT response:", error); // Log the error
+    console.error("Error in ChatGPT API:", error); // Log the error
     return NextResponse.json(
       { error: "Failed to generate response from ChatGPT" },
       { status: 500 }
